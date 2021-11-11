@@ -1,8 +1,5 @@
 import React from "react";
-// import "../App.css";
 import { MdModeEdit, MdDelete } from "react-icons/md";
-// MdModeEdit
-// MdDelete
 
 export default function APiLoadDataPage() {
   const [data, setData] = React.useState([]);
@@ -19,6 +16,14 @@ export default function APiLoadDataPage() {
   React.useEffect(() => {
     getApi();
   }, []);
+
+  const deleteApi = async (id) => {
+    await fetch("http://localhost:5000/" + id, {
+      method: "DELETE",
+    });
+    getApi();
+  };
+
   return (
     <>
       <div className="mx-5">
@@ -36,14 +41,14 @@ export default function APiLoadDataPage() {
                 <td className="text-light">{de.name}</td>
                 <td className="text-light">{de.department}</td>
                 <td>
-                  <button
-                    type="button"
-                    onClick={getApi}
-                    className="btn btn-light mx-2 mt-2"
-                  >
+                  <button type="button" className="btn btn-light mx-2 mt-2">
                     <MdModeEdit />
                   </button>
-                  <button type="button" className="btn btn-light mx-2 mt-2">
+                  <button
+                    onClick={() => deleteApi(de._id)}
+                    type="button"
+                    className="btn btn-light mx-2 mt-2"
+                  >
                     <MdDelete />
                   </button>
                 </td>
